@@ -33,9 +33,15 @@ This project uses a combination of publicly available datasets to train the clas
 2.  [Tyre Quality Classification (GTS.ai)](https://gts.ai/dataset-download/tyre-quality-classification-dataset-for-ai-analysis/)
 3.  [Full vs Flat Tire Images (Kaggle)](https://www.kaggle.com/datasets/rhammell/full-vs-flat-tire-images)
 
+
+**Data Preparation:**
+All dataset preprocessing is handled by scripts in `data_preprocessing/`:
+- `convert_condition_dataset.py`: Converts Roboflow multiclass dataset to binary (`good` vs `worn`).
+- `split_pressure_dataset.py`: Splits Kaggle dataset (`full`, `flat`) into train/val/test (78/12/10).
+
 **Target Classification Tasks:**
-* **Condition:** Classifying the tyre tread as 'Normal' or 'Worn'.
-* **Pressure:** Classifying the tyre pressure as 'Full' or 'Flat/Underinflated'.
+* **Condition:** Classifying the tyre tread as 'good' or 'Worn'.
+* **Pressure:** Classifying the tyre pressure as 'Full' or 'Flat'.
 
 ---
 
