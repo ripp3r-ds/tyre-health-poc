@@ -1,48 +1,55 @@
+# Tyre Health Detection (Proof of Concept)
 
-# 🛞 Tyre Health Detection POC
-
-**Goal:**  
-A lightweight ML-based system that classifies tyre condition and pressure status from a single image, designed as a prototype for toll-gate or parking-lot safety checks.
-
----
-
-## 🚀 Tech Stack
-- **Training:** PyTorch (local GPU) → Azure ML (managed jobs later)
-- **Deployment:** Azure ML Managed Online Endpoint
-- **API:** FastAPI hosted on Azure Container Apps
-- **UI:** Minimal HTML/JS for image upload & prediction
-- **Storage:** Azure Blob Storage (dataset & logs)
+## Objective
+This project is a proof-of-concept for a lightweight machine learning system. It aims to classify both the condition (e.g., worn) and pressure status (e.g., flat) of a tyre from a single image. The intended application is as a prototype for automated safety checks at locations like toll gates or parking lots.
 
 ---
 
-## 📁 Project Structure
-- `src/` → training and inference code  
-- `score/` → deployment artifacts for Azure ML  
-- `api/` → FastAPI microservice to call the ML endpoint  
-- `ui/` → static web interface (optional)  
-- `azure/` → IaC configs for AML and ACA  
-- `data/` → local datasets (raw, processed, splits)  
-- `models/` → trained weights  
+## Technology Stack
+* **Model Training:** PyTorch, initially on a local GPU, with plans to use Azure ML for managed training jobs.
+* **Model Deployment:** Azure ML Managed Online Endpoint.
+* **API Layer:** FastAPI application hosted on Azure Container Apps.
+* **Frontend:** A minimal HTML/JS interface for testing image uploads and viewing predictions.
+* **Storage:** Azure Blob Storage for datasets and logs.
 
 ---
 
-## 🧠 Datasets
-1. [Tire Tread Dataset (Roboflow)](https://universe.roboflow.com/mark-aft7n/tire-tread)
-2. [Tyre Quality Classification (GTS.ai)](https://gts.ai/dataset-download/tyre-quality-classification-dataset-for-ai-analysis/)
-3. [Full vs Flat Tire Images (Kaggle)](https://www.kaggle.com/datasets/rhammell/full-vs-flat-tire-images)
-
-Tasks:
-- `condition`: Normal vs Worn
-- `pressure`: Full vs Flat/Underinflated
+## Project Structure
+* `src/`: Core Python source code for model training, inference logic, and utilities.
+* `score/`: Deployment-related scripts and artifacts required by Azure ML.
+* `api/`: The FastAPI microservice that serves as a wrapper for the ML endpoint.
+* `ui/`: Optional static web interface for demo purposes.
+* `azure/`: Infrastructure-as-Code (IaC) configurations for deploying Azure ML and Container App resources.
+* `data/`: Local directory for datasets (not checked into git). Contains raw, processed, and split data.
+* `models/`: Saved model weights (e.g., `.pth` files) after training.
 
 ---
 
-## 🧩 Local Setup
+## Datasets
+This project uses a combination of publicly available datasets to train the classification models.
+
+**Sources:**
+1.  [Tire Tread Dataset (Roboflow)](https://universe.roboflow.com/mark-aft7n/tire-tread)
+2.  [Tyre Quality Classification (GTS.ai)](https://gts.ai/dataset-download/tyre-quality-classification-dataset-for-ai-analysis/)
+3.  [Full vs Flat Tire Images (Kaggle)](https://www.kaggle.com/datasets/rhammell/full-vs-flat-tire-images)
+
+**Target Classification Tasks:**
+* **Condition:** Classifying the tyre tread as 'Normal' or 'Worn'.
+* **Pressure:** Classifying the tyre pressure as 'Full' or 'Flat/Underinflated'.
+
+---
+
+## Local Setup
+To run this project locally, follow these steps:
+
 ```bash
-# clone and setup
+# Clone the repository
 git clone <repo_url>
 cd tyre-health-poc
-python -m venv venv
-source venv/bin/activate   # or venv\Scripts\activate (Windows)
-pip install -r api/requirements.txt
 
+# Create and activate a Python virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows, use: venv\Scripts\activate
+
+# Install the required dependencies
+pip install -r api/requirements.txt
