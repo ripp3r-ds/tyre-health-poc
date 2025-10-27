@@ -1,0 +1,24 @@
+name: tyre-env
+channels:
+  - pytorch
+  - nvidia # Required for CUDA toolkit components if needed explicitly
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pytorch::pytorch=2.5.1 # Or the version you have locally
+  - pytorch::torchvision=0.20.1 # Match your local version
+  - pytorch::torchaudio # Match your local version
+  - pytorch::pytorch-cuda=12.1 # Specify the CUDA toolkit version
+  - scikit-learn
+  - numpy
+  - matplotlib
+  - pandas # Good for handling data/configs if needed later
+  - python-dotenv # Useful for local runs, though AML jobs handle inputs differently
+  - mlflow
+  - azureml-mlflow # Needed for AML integration
+  - pip:
+    - azure-ai-ml # Azure ML SDK v2
+    - Pillow # Image handling
+    # Add any other specific pip packages here
