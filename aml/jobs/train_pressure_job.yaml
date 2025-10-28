@@ -1,0 +1,23 @@
+
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+code: ../../src/ml_training # Path to training code RELATIVE to this YAML
+command: >-
+  python train.py 
+  --task pressure
+  --data ${{inputs.training_data}}
+  --epochs 15                 # Or override
+  --batch_size 32
+  --learning_rate 1e-3        # Single LR for pressure head
+  --weight_decay 1e-4
+  --patience 4
+  --dropout 0                 # NO dropout for pressure model
+  --num_workers 4
+  --k_folds 5                 # Enable K-Fold for pressure
+inputs:
+  training_data:
+    type: uri_folder
+    path: azureml:Tyre-health-data:1/pressure/ 
+environment: azureml:tyre-train-env@latest
+compute: azureml:tyre-health-build
+display_name: Train_Pressure_Model_ResNet18_KFold
+experiment_name: Tyre_Model_pressure # Matches mlflow.set_experiment
