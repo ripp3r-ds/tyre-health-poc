@@ -5,19 +5,19 @@ command: >-
   python train.py 
   --task pressure
   --data ${{inputs.training_data}}
-  --epochs 15                 # Or override
+  --epochs 15                 
   --batch_size 32
-  --learning_rate 1e-3        # Single LR for pressure head
+  --learning_rate 1e-3        
   --weight_decay 1e-4
   --patience 4
-  --dropout 0                 # NO dropout for pressure model
+  --dropout 0                 
   --num_workers 4
-  --k_folds 5                 # Enable K-Fold for pressure
+  --k_folds 5                 
 inputs:
   training_data:
     type: uri_folder
-    path: azureml:Tyre-health-data:1/pressure/ 
-environment: azureml:tyre-train-env@latest
+    path: azureml:tyre-health-pressure:1
+environment: azureml:tyre-train-env-cpu@latest
 compute: azureml:tyre-health-build
 display_name: Train_Pressure_Model_ResNet18_KFold
-experiment_name: Tyre_Model_pressure # Matches mlflow.set_experiment
+experiment_name: Tyre_Model_pressure 

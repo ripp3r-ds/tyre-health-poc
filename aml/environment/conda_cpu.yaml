@@ -1,0 +1,22 @@
+# aml/environment/conda_cpu.yaml
+name: tyre-env-cpu
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pytorch::pytorch=2.5.1
+  - pytorch::torchvision=0.20.1
+  - pytorch::torchaudio
+  - scikit-learn
+  - numpy
+  - matplotlib
+  - pandas
+  - mlflow
+
+  - pip:
+    - azure-ai-ml
+    - Pillow
+    - azureml-mlflow 
