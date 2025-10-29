@@ -1,0 +1,18 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+
+# This command just lists the files in the input directory and exits.
+# It will prove if the mount was successful.
+command: ls -R ${{inputs.test_input}}
+
+inputs:
+  test_input:
+    type: uri_folder
+    # Use the NEW datastore and the NEW simple path
+    path: azureml://subscriptions/92cb0224-ba4d-47f9-8489-37d2045c0dd0/resourcegroups/demo_tyremlops_poc_sind/workspaces/demo_tyrehealth_poc/datastores/datastore_adls_gen2_tyrepoc/paths/test/
+
+# Use your existing environment and the NEW compute
+environment: azureml:tyre-train-env-cpu@latest 
+compute: azureml:tyre-health-train   
+
+display_name: Final_Data_Access_Test
+experiment_name: Tyre_Data_Access_Test
