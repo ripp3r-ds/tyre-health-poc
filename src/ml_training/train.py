@@ -216,8 +216,8 @@ def train_standard(args, device):
         # Consider adding signature/input_example
     )
     print(f"   Model logged to path: {model_info.artifact_path}")
-    print(f"   Model registered as: {model_info.registered_model_name} version {model_info.version if model_info.version else '(new)'}")
-
+    # Access the name via the registered_model_version attribute
+    print(f"   Model registered as: {model_info.registered_model_version.name} version {model_info.registered_model_version.version}")
     # Final evaluation on test set
     print("\n--- Evaluating best model on Test Set ---")
     test_acc, test_loss, yt_test, yp_test = evaluate(model, test_loader, loss_fn, device)

@@ -16,8 +16,8 @@ command: >-
 inputs:
   training_data:
     type: uri_folder
-    path: azureml:tyre-health-pressure:1
+    path: azureml://subscriptions/92cb0224-ba4d-47f9-8489-37d2045c0dd0/resourcegroups/demo_tyremlops_poc_sind/workspaces/demo_tyrehealth_poc/datastores/datastore_adls_gen2_tyrepoc/paths/raw/pressure/
 environment: azureml:tyre-train-env-cpu@latest
-compute: azureml:tyre-health-build
+compute: azureml:tyre-health-train
 display_name: Train_Pressure_Model_ResNet18_KFold
 experiment_name: Tyre_Model_pressure 
