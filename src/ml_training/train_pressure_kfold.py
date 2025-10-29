@@ -167,7 +167,7 @@ def main():
         try:
             info = mlflow.pytorch.log_model(
                 pytorch_model=final_model,
-                name="best_cv_model",
+                artifact_path="best_cv_model",
                 registered_model_name="tyre-model-pressure-cv",
             )
             # Save registered model info if available

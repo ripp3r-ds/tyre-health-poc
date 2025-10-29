@@ -116,7 +116,7 @@ def main():
         try:
             info = mlflow.pytorch.log_model(
                 pytorch_model=model,
-                name="model",
+                artifact_path="model",
                 registered_model_name="tyre-model-condition",
             )
             mlflow.log_param("registered_model_name", getattr(getattr(info, "registered_model_version", None), "name", "None"))
