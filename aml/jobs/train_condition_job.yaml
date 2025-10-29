@@ -2,18 +2,8 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 code: ../../src/ml_training # Path to training code RELATIVE to this YAML
 command: >-
-  python train.py 
-  --task condition
-  --data ${{inputs.training_data}}
-  --epochs 15                 
-  --batch_size 32
-  --learning_rate_head 5e-4
-  --learning_rate_body 1e-6
-  --weight_decay 1e-4
-  --patience 4
-  --dropout 0.5               
-  --num_workers 4
-  # --k_folds 0               
+  python train_condition.py 
+  --data ${{inputs.training_data}}        
 inputs:
   training_data:
     type: uri_folder

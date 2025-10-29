@@ -9,7 +9,6 @@ dependencies:
   - pip
   - pytorch::pytorch=2.5.1
   - pytorch::torchvision=0.20.1
-  - pytorch::torchaudio
   - scikit-learn
   - numpy
   - matplotlib
@@ -20,3 +19,4 @@ dependencies:
     - azure-ai-ml
     - Pillow
     - azureml-mlflow 
+    

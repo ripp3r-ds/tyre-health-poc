@@ -2,17 +2,9 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 code: ../../src/ml_training # Path to training code RELATIVE to this YAML
 command: >-
-  python train.py 
-  --task pressure
+  python train_pressure_kfold.py 
   --data ${{inputs.training_data}}
-  --epochs 15                 
-  --batch_size 32
-  --learning_rate 1e-3        
-  --weight_decay 1e-4
-  --patience 4
-  --dropout 0                 
-  --num_workers 4
-  --k_folds 5                 
+         
 inputs:
   training_data:
     type: uri_folder
@@ -20,4 +12,4 @@ inputs:
 environment: azureml:tyre-train-env-cpu@latest
 compute: azureml:tyre-health-train
 display_name: Train_Pressure_Model_ResNet18_KFold
-experiment_name: Tyre_Model_pressure 
+experiment_name: Tyre_Model_pressure_cv 
