@@ -1,0 +1,26 @@
+
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+code: ../../src/ml_training # Path to training code RELATIVE to this YAML
+command: >-
+  python train.py 
+  --task condition
+  --data ${{inputs.training_data}}
+  --epochs 15                 # Or override here/via --set
+  --batch_size 32
+  --learning_rate_head 5e-4
+  --learning_rate_body 1e-6
+  --weight_decay 1e-4
+  --patience 4
+  --dropout 0.5               # Dropout for condition model
+  --num_workers 4
+  # --k_folds 0               # K-Fold disabled by default if arg not present
+inputs:
+  training_data:
+    type: uri_folder
+    # Points to the registered data asset AND the specific subfolder
+    path: azureml:Tyre-health-data:1/raw/condition/ 
+environment: azureml:tyre-train-env@latest # Use the named environment created above
+compute: azureml:tyre-health-build    # Your compute cluster
+display_name: Train_Condition_Model_ResNet18
+experiment_name: Tyre_Model_condition # Matches mlflow.set_experiment
+# MLflow is auto-enabled, no outputs needed as model is logged & registered by script

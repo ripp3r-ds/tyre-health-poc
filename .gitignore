@@ -208,3 +208,8 @@ __marimo__/
 data/
 Notebooks/models/
 artifacts/
+mlruns/
+outputs/
+
+*.pt
+*.onnx
