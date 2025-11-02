@@ -1,16 +1,6 @@
-# API framework
-fastapi>=0.100.0
-uvicorn[standard]>=0.23.0 # Includes standard dependencies like websockets
-python-multipart>=0.0.6 # Only if your API handles file uploads directly
-pydantic>=2.0.0
 
-# Core ML dependencies 
-torch==2.5.1
-torchvision==0.20.1
-
-
-# Image processing 
-Pillow>=10.0.0
-
-# Numerical operations 
-numpy>=1.24.0
+fastapi
+uvicorn[standard]
+python-dotenv
+requests
+python-multipart
