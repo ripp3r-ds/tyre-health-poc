@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tyre Health Check</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background-color: #f9f9f9; }
+        h1 { color: #333; }
+        #results { background-color: #2d2d2d; color: #00ff00; padding: 15px; border-radius: 8px; margin-top: 20px; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap; }
+        button { background-color: #0078D4; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-right: 10px; }
+        button:hover { background-color: #005a9e; }
+        img { max-width: 100%; border-radius: 8px; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Tyre Health Check 🚗💨</h1>
+    <p>Upload a clear image of your tyre tread to check its condition and pressure.</p>
+    
+    <input type="file" id="tyreImageInput" accept="image/*">
+    <br><br>
+    <button onclick="predict('condition')">Check Condition</button>
+    <button onclick="predict('pressure')">Check Pressure</button>
+
+    <div id="imagePreviewContainer"></div>
+    <div id="resultsContainer" style="display:none;">
+        <h3>Results:</h3>
+        <pre id="results"></pre> <!-- <pre> tag is great for showing code/json -->
+    </div>
+
+    <!-- This line connects our JavaScript file -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: pressure-v1 
+endpoint_name: tyre-health-api
+model: azureml:tyre-model-pressure-cv@latest
+code_configuration:
+  code: ../../../score/pressure/
+  scoring_script: score.py
+environment:
+  name: tyre-deploy-shared-env 
+  version: 2
+  conda_file: ../../../score/shared_environment.yml
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+instance_type: Standard_DS2_v2
+instance_count: 1
