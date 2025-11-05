@@ -56,8 +56,8 @@ export function ImageUpload({ modelType, onAnalyze, onBack }: ImageUploadProps) 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 py-12 animate-in fade-in duration-500">
-      <div className="max-w-3xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 py-10 animate-in fade-in duration-500">
+      <div className="max-w-3xl mx-auto space-y-6">
         <div className="flex items-center justify-between animate-in slide-in-from-left duration-500">
           <Button
             variant="ghost"
@@ -74,8 +74,8 @@ export function ImageUpload({ modelType, onAnalyze, onBack }: ImageUploadProps) 
           <Badge className={`${isCondition ? 'bg-blue-600' : 'bg-emerald-600'} text-white px-4 py-1.5 shadow-lg`}>
             {isCondition ? 'Tire Condition Model' : 'Tire Inflation Model'}
           </Badge>
-          <h1 className="text-white">Upload Your Tire Photo</h1>
-          <p className="text-slate-300 max-w-2xl mx-auto">
+          <h1 className="text-white text-2xl md:text-4xl font-semibold">Upload Your Tire Photo</h1>
+          <p className="text-slate-200 max-w-2xl mx-auto">
             Upload a clear photo of your tire for analysis. Our ML model will process it and provide results instantly.
           </p>
         </div>
@@ -184,7 +184,7 @@ export function ImageUpload({ modelType, onAnalyze, onBack }: ImageUploadProps) 
             <div className="space-y-1">
               <p className="text-white">Privacy Notice</p>
               <p className="text-slate-400 text-sm">
-                Your image is sent to your local API at <span className="text-white">http://localhost:8000</span> for analysis. Metadata (EXIF) is stripped client‑side before upload.
+                Your image is sent to an Azure ML API for analysis. All Metadata (EXIF) is stripped client‑side before upload.
               </p>
             </div>
           </div>

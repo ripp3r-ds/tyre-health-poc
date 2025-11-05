@@ -24,11 +24,11 @@ export function ExampleGuidance({ modelType, onProceed, onBack }: ExampleGuidanc
     }
   ] : [
     {
-      src: 'https://images.unsplash.com/photo-1694065628369-eaa8347e4337?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjB0aXJlJTIwY2xvc2V8ZW58MXx8fHwxNzYyMTc0NjY2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      src: 'https://plus.unsplash.com/premium_photo-1694670121843-79b433c4ed59?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=774',
       label: 'Full tire visible'
     },
     {
-      src: 'https://images.unsplash.com/photo-1740979880769-ed67e6ada487?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmbGF0JTIwdGlyZSUyMGRlZmxhdGVkfGVufDF8fHx8MTc2MjE3NDY2Nnww&ixlib=rb-4.1.0&q=80&w=1080',
+      src: 'https://images.unsplash.com/photo-1706743304794-9e96df760a6b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1548',
       label: 'Side profile view'
     }
   ];
@@ -46,8 +46,8 @@ export function ExampleGuidance({ modelType, onProceed, onBack }: ExampleGuidanc
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 py-12 animate-in fade-in duration-500">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 py-10 animate-in fade-in duration-500">
+      <div className="max-w-5xl mx-auto space-y-6">
         <div className="flex items-center justify-between animate-in slide-in-from-left duration-500">
           <Button
             variant="ghost"
@@ -64,8 +64,8 @@ export function ExampleGuidance({ modelType, onProceed, onBack }: ExampleGuidanc
           <Badge className={`${isCondition ? 'bg-blue-600' : 'bg-emerald-600'} text-white px-4 py-1.5 shadow-lg`}>
             {isCondition ? 'Tire Condition Model' : 'Tire Inflation Model'}
           </Badge>
-          <h1 className="text-white">Photo Guidelines</h1>
-          <p className="text-slate-300 max-w-2xl mx-auto">
+          <h1 className="text-white text-2xl md:text-4xl font-semibold">Photo Guidelines</h1>
+          <p className="text-slate-200 max-w-2xl mx-auto">
             For optimal results, follow these guidelines when capturing your tire photo. The model performs best with clear, well-lit images.
           </p>
         </div>
