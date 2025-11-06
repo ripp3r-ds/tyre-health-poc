@@ -1,211 +1,87 @@
-# Tyre Health Detection (Proof of Concept)
+# TireCheck AI
 
-## 🎯 Objective
-This project is a proof-of-concept for a lightweight machine learning system that classifies both the **condition** (good vs worn) and **pressure status** (full vs flat) of a tyre from a single image. The intended application is automated safety checks at locations like toll gates or parking lots.
+Quick, AI-assisted checks to spot common tire issues before they get expensive. Built for demos — not a replacement for professional inspection.
 
-## 🏗️ Technology Stack
-* **Model Training:** PyTorch with transfer learning and custom CNNs
-* **Experiment Tracking:** MLflow for model versioning and metrics
-* **Model Deployment:** Azure ML Managed Online Endpoint
-* **API Layer:** FastAPI application hosted on Azure Container Apps
-* **Frontend:** HTML/JS interface for testing image uploads
-* **Storage:** Azure Blob Storage for datasets and model artifacts
+## Tech stack
+- Frontend: React + TypeScript + Vite + Tailwind
+- API: FastAPI (Python) calling Azure ML Managed Online Endpoint
+- Training: PyTorch + MLflow
+- Infra: Azure ML, Azure Container Apps, Azure Static Web Apps
 
-## 📁 Project Structure
+## Project structure (final)
 ```
 tyre-health-poc/
-├── api/                    # FastAPI microservice
-│   ├── app.py             # Main API application
-│   ├── requirements.txt   # API dependencies
-│   └── Dockerfile         # Container configuration
-├── azure/                 # Infrastructure as Code
-│   ├── containerapp.yml   # Container App configuration
-│   ├── ml_deploy.yml      # ML deployment configuration
-│   └── infra.md           # Infrastructure documentation
-├── data/                  # Dataset storage (not in git)
-│   └── raw/
-│       ├── condition/     # Tyre condition dataset
-│       └── pressure/      # Tyre pressure dataset
-├── data-preprocessing/    # Data preparation scripts
-│   ├── kaggle_data_process.py
-│   ├── roboflow_data_process.py
-│   └── README.md
-├── notebooks/             # Training notebooks
-│   ├── training_condition.ipynb
-│   ├── training_pressure.ipynb
-│   ├── models/            # Trained model weights
-│   └── artifacts/         # Training artifacts
-├── score/                 # Azure ML deployment artifacts
-│   ├── score.py           # Inference script
-│   ├── conda.yml          # Environment specification
-│   └── inference_config.json
-├── src/                   # Core source code
-│   ├── model.py           # Model definitions
-│   ├── train.py           # Training utilities
-│   ├── inference.py       # Inference utilities
-│   └── utils.py           # Helper functions
-└── ui/                    # Web interface
-    └── static_webapp/
-        ├── index.html
-        └── script.js
+├── frontend/                      # React app (Vite)
+├── src/
+│   ├── api/                      # FastAPI app (src/api/main.py)
+│   └── ml_training/              # Training code and scripts
+├── aml/                           # Azure ML job/env specs
+│   ├── environment/
+│   └── endpoints/
+├── score/                         # Azure ML scoring scripts/env
+├── data-preprocessing/            # Dataset preparation helpers
+├── notebooks/                     # Experiment notebooks + artifacts
+└── README.md
 ```
 
-## 📊 Datasets
+## Run locally
 
-### **Condition Dataset (Tyre Tread)**
-- **Source:** [Roboflow Tire Tread Dataset](https://universe.roboflow.com/mark-aft7n/tire-tread)
-- **Classes:** `good`, `worn`
-- **Size:** ~8,000 images
-- **Split:** train/val/test (80/10/10)
-- **Model:** ResNet18 with transfer learning
+### 1) Backend API
+Create `src/api/.env` with:
 
-### **Pressure Dataset (Tyre Pressure)**
-- **Source:** [Kaggle Full vs Flat Tire Images](https://www.kaggle.com/datasets/rhammell/full-vs-flat-tire-images)
-- **Classes:** `full`, `flat`
-- **Size:** ~500 images (small dataset)
-- **Split:** train/val/test (78/12/10)
-- **Model:** Custom CNN optimized for small datasets
+```
+AML_ENDPOINT=https://<your-aml-endpoint>.azurewebsites.net/score
+AML_KEY=<your-aml-key>
+```
 
-## 🚀 Local Setup
-
-### **Prerequisites**
-- Python 3.8+
-- CUDA-compatible GPU (recommended)
-- Git
-
-### **Installation**
+Install and run:
 ```bash
-# Clone the repository
-git clone <repo_url>
-cd tyre-health-poc
-
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r api/requirements.txt
+cd src/api
+python -m venv .venv && . .venv/Scripts/activate  # on Windows
+pip install -r requirements.txt
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-
-
-## 🏃‍♂️ Quick Start
-
-### **1. Data Preparation**
+### 2) Frontend
+Set the API base URL in `frontend/.env`:
+```
+VITE_API_BASE_URL=http://localhost:8000
+```
+Run:
 ```bash
-# Process datasets
-cd data-preprocessing
-python kaggle_data_process.py    # Process pressure dataset
-python roboflow_data_process.py  # Process condition dataset
+cd frontend
+npm install
+npm run dev
 ```
 
-### **2. Model Training**
-```bash
-# Train condition model
-jupyter notebook notebooks/training_condition.ipynb
+## Training
+See `src/ml_training/README.md` for environment setup, scripts, and MLflow usage.
 
-# Train pressure model  
-jupyter notebook notebooks/training_pressure.ipynb
-```
+## What should not be committed
+- `venv/`, `.venv/`, `node_modules/`
+- `mlruns/`, `outputs/`, `notebooks/models/`, `notebooks/artifacts/`
+- raw datasets under `data/`
 
-### **3. Model Evaluation**
-- **Condition Model**: ~90% accuracy on validation set
-- **Pressure Model**: ~75-85% accuracy (realistic for small dataset)
-- **Models saved**: `notebooks/models/`
+Consider adding these to `.gitignore` if not already ignored.
 
-### **4. API Testing**
-```bash
-# Start API server
-cd api
-python app.py
+## Deployment overview
+- Azure ML hosts the model endpoint; scoring scripts live in `score/`
+- FastAPI runs in Azure Container Apps; set `AML_ENDPOINT` and `AML_KEY` as secrets
+- Frontend deploys to Azure Static Web Apps; set `VITE_API_BASE_URL` to the container app URL
 
-# Test with sample image
-curl -X POST "http://localhost:8000/predict" \
-     -H "Content-Type: multipart/form-data" \
-     -F "file=@sample_tyre.jpg"
-```
+See the “Deployment notes” at the end of this document for common gotchas.
 
-## 📈 Model Performance
+## License
+MIT — see `LICENSE`.
 
-### **Condition Classification (ResNet18)**
-- **Validation Accuracy**: ~90%
-- **Classes**: good, worn
-- **Training Time**: ~30 minutes (GPU)
-- **Model Size**: ~45MB
+## Deployment notes (Azure SWA + ACA)
+1) Configure CORS on the FastAPI app (already enabled for localhost). For cloud, allow the SWA domain.
+2) Expose container port 8000 and ensure the ACA ingress is set to external.
+3) Set secrets in ACA: `AML_ENDPOINT`, `AML_KEY`.
+4) In SWA, add `VITE_API_BASE_URL` as an environment variable (or build-time secret) and rebuild.
+5) If using custom domains, update allowed origins and HTTPS-only settings.
 
-### **Pressure Classification (Custom CNN)**
-- **Cross-Validation**: ~75-85%
-- **Classes**: full, flat
-- **Training Time**: ~15 minutes (GPU)
-- **Model Size**: ~10MB
-- **Optimized for**: Small datasets, safety-critical applications
-
-## Azure Deployment
-
-### **Prerequisites**
-- Azure subscription
-- Azure ML workspace
-- Azure Container Registry
-
-### **Deploy to Azure**
-```bash
-# Deploy ML models
-az ml online-endpoint create -f azure/ml_deploy.yml
-
-# Deploy API service
-az containerapp create -f azure/containerapp.yml
-```
-
-## Key Features
-
-### **Condition Detection**
-- **Transfer Learning**: ResNet18 pre-trained on ImageNet
-- **Class Imbalance**: Handled with weighted loss
-- **Augmentation**: Horizontal flip, color jitter
-- **Architecture**: Frozen backbone + trainable head
-
-### **Pressure Detection**
-- **Transfer Learning**: ResNet18 pre-trained on ImageNet
-- **Class Imbalance**: Handled with weighted loss
-- **Augmentation**: Horizontal flip, color jitter
-- **Architecture**: Frozen backbone + trainable head
-## 📊 Experiment Tracking
-
-All training runs are tracked with MLflow:
-- **Metrics**: Loss, accuracy, precision, recall
-- **Parameters**: Learning rates, batch sizes, model configs
-- **Artifacts**: Models, confusion matrices, ROC curves
-- **UI**: Access at `http://localhost:5000`
-
-## 🛠️ Development
-
-### **Adding New Models**
-1. Create model class in `src/model.py`
-2. Add training script in `notebooks/`
-3. Update inference in `score/score.py`
-4. Test with API
-
-### **Data Pipeline**
-1. Raw data → `data-preprocessing/` scripts
-2. Processed data → `data/raw/`
-3. Training → `notebooks/`
-4. Models → `notebooks/models/`
-
-## 📝 Notes
-
-
-- **Overfitting**: Controlled with early stopping and regularization
-- **Safety Priority**: Pressure model optimized for recall (flat tyre detection)
-- **Scalability**: Designed for Azure ML deployment
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Make changes
-4. Test thoroughly
-5. Submit pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Troubleshooting:
+- 403/401 from AML: verify `AML_KEY` and correct endpoint URL path (`/score`).
+- CORS preflight failures: confirm ACA returns 200 to `OPTIONS` and `Access-Control-Allow-Origin` matches SWA.
+- Mixed content errors: ensure both SWA and ACA are HTTPS.
