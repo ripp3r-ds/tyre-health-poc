@@ -20,7 +20,8 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,
+    allow_origin_regex=r"^https://.*\.azurestaticapps\.net$",
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
