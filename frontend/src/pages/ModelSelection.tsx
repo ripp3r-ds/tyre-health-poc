@@ -2,6 +2,7 @@ import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Gauge, Eye, AlertTriangle, TrendingDown, DollarSign, Shield, Droplets, Clock, Github } from 'lucide-react';
 import { ImageWithFallback } from './ImageWithFallback';
+import logo from '../assets/logo.svg';
 
 interface ModelSelectionProps {
   onSelectModel: (model: 'condition' | 'inflation') => void;
@@ -23,7 +24,12 @@ export function ModelSelection({ onSelectModel }: ModelSelectionProps) {
       <header className="relative z-10">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between animate-in slide-in-from-top-2 duration-500">
           <div className="flex items-center gap-2">
-            <div className="size-5 rounded-full bg-emerald-500/80 ring-2 ring-emerald-400/30" />
+            <img
+              src={logo}
+              alt="TireCheck AI logo"
+              className="w-6 h-6 transition-transform hover:scale-110 filter brightness-0 invert"
+
+            />
             <span className="text-white/90 font-semibold tracking-tight">TireCheck AI</span>
           </div>
           <a
@@ -50,12 +56,12 @@ export function ModelSelection({ onSelectModel }: ModelSelectionProps) {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900/70 to-slate-900" />
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 py-8 md:py-12">
-          <div className="text-center space-y-3 mb-2 animate-in slide-in-from-bottom-4 duration-700">
+        <div className="relative max-w-6xl mx-auto px-4 py-4 md:py-8">
+          <div className="text-center space-y-2 mb-4 animate-in slide-in-from-bottom-4 duration-700">
             <h1 className="text-white text-3xl md:text-5xl font-semibold tracking-tight">TireCheck AI</h1>
             <p className="text-slate-200 max-w-3xl mx-auto text-base md:text-lg">
               Quick, AI-assisted checks to spot common tire issues before they get expensive.
-              Built for demos — not a replacement for professional inspection.
+              Built for academic demonstration purposes — not a replacement for professional inspection.
             </p>
 
             {/* Primary CTAs */}
@@ -101,8 +107,8 @@ export function ModelSelection({ onSelectModel }: ModelSelectionProps) {
       </div>
 
       {/* Model Selection */}
-      <section className="max-w-4xl mx-auto px-4 pb-8">
-        <div className="text-center space-y-2 mb-6 animate-in slide-in-from-bottom-4 duration-700">
+      <section className="max-w-4xl mx-auto px-4 pb-6">
+        <div className="text-center space-y-2 mb-4 animate-in slide-in-from-bottom-4 duration-700">
           <h2 className="text-white text-2xl md:text-3xl font-semibold">Choose Your Inspection Type</h2>
           <p className="text-slate-200 max-w-2xl mx-auto">
             Select which aspect of your tire you&apos;d like to analyze using our ML-powered classification models.
@@ -168,12 +174,12 @@ export function ModelSelection({ onSelectModel }: ModelSelectionProps) {
 
       {/* Footer / About */}
       <footer className="border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4 py-7 grid sm:grid-cols-2 gap-6">
+        <div className="max-w-6xl mx-auto px-4 py-4 grid sm:grid-cols-2 gap-6 animate-in slide-in-from-bottom-4 duration-700">
           <div>
             <h3 className="text-white font-semibold mb-2">About this project</h3>
             <p className="text-slate-300 text-sm leading-relaxed">
               A portfolio demo applying deep learning to tire health: image classification for condition,
-              and a helper flow for inflation checks. FastAPI backend · Azure ML serving · React + Tailwind UI.
+              and for inflation checks. Pytorch Training · FastAPI backend · Azure ML serving · React + Tailwind UI.
             </p>
           </div>
           <div className="sm:justify-self-end">
