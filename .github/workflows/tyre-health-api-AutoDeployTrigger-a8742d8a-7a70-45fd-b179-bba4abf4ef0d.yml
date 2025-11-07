@@ -1,0 +1,49 @@
+name: Trigger auto deployment for tyre-health-api
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/tyre-health-api-AutoDeployTrigger-a8742d8a-7a70-45fd-b179-bba4abf4ef0d.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.TYREHEALTHAPI_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.TYREHEALTHAPI_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.TYREHEALTHAPI_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          _dockerfilePathKey_: _dockerfilePath_
+          _targetLabelKey_: _targetLabel_
+          registryUrl: rithwikyenugantiacr.azurecr.io
+          registryUsername: ${{ secrets.TYREHEALTHAPI_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.TYREHEALTHAPI_REGISTRY_PASSWORD }}
+          containerAppName: tyre-health-api
+          resourceGroup: demo_tyremlops_poc_sind
+          imageToBuild: rithwikyenugantiacr.azurecr.io/tyre-health-api:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
