@@ -6,6 +6,9 @@
     "globalHeaders": {
       "X-Frame-Options": "DENY",
       "X-Content-Type-Options": "nosniff"
+    },
+    "mimeTypes": {
+      ".js": "application/javascript",
+      ".css": "text/css"
     }
   }
-  
